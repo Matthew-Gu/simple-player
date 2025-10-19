@@ -1,0 +1,17 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+	background: #101010;
+}
+
+.icon-tabler {
+	width: 100%;
+	height: 100%;
+}
