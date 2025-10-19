@@ -154,7 +154,7 @@ onMounted(() => {
 				<video ref="video" :class="{ mirror }" crossorigin="anonymous" :poster="poster" />
 			</div>
 
-			<controls-wrapper :hide="!controlsVisible" @hover="(isOver) => (isOverControls = isOver)">
+			<controls-wrapper :hide="!controlsVisible && playing " @hover="(isOver) => (isOverControls = isOver)">
 				<template #top>
 					<progress-bar v-model:current-time="currentTime" :duration="duration" />
 				</template>
