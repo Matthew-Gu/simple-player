@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import CtrlBtn from './CtrlBtn.vue';
 
-defineProps<{ mirror: boolean }>();
+defineProps<{ mirror: boolean; picInPic: boolean }>();
 
 const emit = defineEmits<{
 	(e: 'toggle-mirror'): void;
+	(e: 'toggle-pip'): void;
 }>();
 
+const togglePip = () => {
+	emit('toggle-pip');
+};
+
 const toggleMirror = () => {
-	console.log('toggle');
 	emit('toggle-mirror');
 };
 </script>
@@ -32,6 +36,14 @@ const toggleMirror = () => {
 			</svg>
 		</div>
 		<div class="player-setting-box">
+			<div class="setting-menu-item" @click="togglePip">
+				<div class="menu-label">画中画</div>
+				<div class="menu-value">
+					<div class="switch" :class="{ active: picInPic }">
+						<div class="slider"></div>
+					</div>
+				</div>
+			</div>
 			<div class="setting-menu-item" @click="toggleMirror">
 				<div class="menu-label">视频镜像</div>
 				<div class="menu-value">
@@ -62,18 +74,22 @@ const toggleMirror = () => {
 		transform: translateX(-50%);
 		border-radius: 2px;
 		background: rgba(0, 0, 0, 0.6);
-		width: 100px;
 		user-select: none;
 
 		.setting-menu-item {
-			font-size: 14px;
 			height: 28px;
+			font-size: 14px;
 			line-height: 24px;
+            text-align: center;
 			color: #ffffff;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			padding: 0 6px;
+
+            .menu-label{
+                width: 64px;
+            }
 		}
 
 		&::after {

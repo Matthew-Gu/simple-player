@@ -31,7 +31,7 @@ const controls = useMediaControls(videoRef, {
 
 const mirror = ref(false);
 const { toggle: toggleFullscreen } = useFullscreen(videoPlayer);
-const { playing, currentTime, duration, rate, volume, muted } = controls;
+const { playing, currentTime, duration, rate, volume, muted, isPictureInPicture, togglePictureInPicture } = controls;
 
 const togglePlay = () => (playing.value = !playing.value);
 const toggleMuted = () => (muted.value = !muted.value);
@@ -154,9 +154,9 @@ onMounted(() => {
 				<video ref="video" :class="{ mirror }" crossorigin="anonymous" :poster="poster" />
 			</div>
 
-			<controls-wrapper :hide="!controlsVisible && playing " @hover="(isOver) => (isOverControls = isOver)">
+			<controls-wrapper :hide="!controlsVisible && playing" @hover="(isOver) => (isOverControls = isOver)">
 				<template #top>
-					<progress-bar v-model:current-time="currentTime" :duration="duration" />
+					<progress-bar v-model:current-time="currentTime" :duration="duration" :video-ref="videoRef" />
 				</template>
 
 				<template #bottom-left>
@@ -170,7 +170,11 @@ onMounted(() => {
 
 					<volume-ctrl v-model:volume="volume" :muted="muted" @toggle-muted="toggleMuted" />
 
-					<settings :mirror="mirror" @toggle-mirror="toggleMirror" />
+					<settings
+						:pic-in-pic="isPictureInPicture"
+						:mirror="mirror"
+						@toggle-mirror="toggleMirror"
+						@toggle-pip="togglePictureInPicture" />
 
 					<full-screen @toggle-full="toggleFullscreen" />
 				</template>

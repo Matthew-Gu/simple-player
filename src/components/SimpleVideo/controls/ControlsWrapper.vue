@@ -55,7 +55,6 @@ useEventListener(controlsRef, 'mouseleave', handleMouseLeave, { passive: true })
 
 	.player-controls-top {
 		padding: 0 12px;
-		overflow: hidden;
 	}
 
 	.player-controls-bottom {
