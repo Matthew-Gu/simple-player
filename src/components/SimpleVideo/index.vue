@@ -170,12 +170,10 @@ onMounted(() => {
 	const bindTouch = (el: Element | null, isForward: boolean) => {
 		if (!el) return;
 		let pressTimer: number | null = null;
-		let hasMoved = false;
 
 		const reset = () => {
 			if (pressTimer) clearTimeout(pressTimer);
 			pressTimer = null;
-			hasMoved = false;
 		};
 
 		useEventListener(
@@ -185,7 +183,6 @@ onMounted(() => {
 				e.preventDefault();
 				reset();
 				pressTimer = window.setTimeout(() => {
-					if (!hasMoved) {
 						// 长按开始：预览
 						originRate.value = rate.value;
 						originPlayState.value = playing.value;
@@ -198,16 +195,10 @@ onMounted(() => {
 								currentTime.value = Math.max(0, currentTime.value - TIME_ADD);
 							}, 100);
 						}
-					}
 				}, 300); // 移动端长按阈值
 			},
 			{ passive: false }
 		);
-
-		useEventListener(el, 'touchmove', () => {
-			hasMoved = true;
-			reset();
-		});
 
 		useEventListener(el, 'touchend', () => {
 			reset();
@@ -323,7 +314,7 @@ onMounted(() => {
 
 				.touch-area {
 					flex: 1 1 0;
-					touch-action: manipulation;
+                    touch-action: manipulation;
 				}
 			}
 		}
