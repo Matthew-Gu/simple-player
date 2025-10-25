@@ -8,7 +8,7 @@
 .player-ctrl-btn {
 	fill: #ffffff;
 	color: #ffffff;
-	width: 36px;
+	width: 32px;
 	height: 22px;
 	font-size: 12px;
 	line-height: 22px;

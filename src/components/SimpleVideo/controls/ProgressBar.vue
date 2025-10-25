@@ -59,8 +59,9 @@ const progressPercent = computed(() => {
 	return (props.currentTime / props.duration) * 100;
 });
 
-const startDragging = () => {
-	dragging.value = true;
+const startDragging = (event: MouseEvent | TouchEvent) => {
+  if (event instanceof MouseEvent && event.button !== 0) return;
+  dragging.value = true;
 };
 
 const stopDragging = () => {
@@ -77,7 +78,7 @@ watch([dragging, elementX], () => {
 
 const debouncedGeneratePreview = useDebounceFn((time: number) => {
 	captureFrame(time);
-}, 50);
+}, 20);
 
 watch(elementX, (x) => {
 	if (!props.duration || elementWidth.value <= 0 || isOutside.value) return;
@@ -251,10 +252,10 @@ const formatSeconds = (seconds: number = 0) => {
 
 .player-controls-progress-preview {
 	position: absolute;
-	width: 320px;
+	width: 160px;
+	height: 90px;
 	bottom: 100%;
 	transform: translateY(-8px);
-	background: rgba(0, 0, 0, 0.6);
 	border-radius: 4px;
 	overflow: hidden;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -266,18 +267,20 @@ const formatSeconds = (seconds: number = 0) => {
 
 .player-controls-progress-preview img {
 	display: block;
-	width: 320px;
-	height: 180px;
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 	border-radius: 4px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .player-controls-progress-preview span {
-	padding: 4px 0;
+	position: absolute;
+	bottom: 0;
+	padding: 4px 8px;
+	border-radius: 4px;
 	font-size: 14px;
 	color: #fff;
-	text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+	background: rgba(0, 0, 0, 0.6);
 }
 
 .fade-enter-active,
